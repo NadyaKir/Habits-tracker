@@ -7,6 +7,15 @@ const HABIT_KEY = "HABIT_KEY";
 
 const page = {
   menu: document.querySelector(".menu__list"),
+  header: {
+    h1: document.querySelector(".h1"),
+    progressPercent: document.querySelector(".progress__percent"),
+    progressCoverBar: document.querySelector(".progress__cover-bar"),
+  },
+  content: {
+    daysContainer: document.getElementById("days"),
+    nextDay: document.querySelector(".habit__day"),
+  },
 };
 
 /*utils*/
@@ -26,9 +35,6 @@ function saveData() {
 /*render*/
 
 function rerenderMenu(activeHabit) {
-  if (!activeHabit) {
-    return;
-  }
   for (const habit of habits) {
     const existed = document.querySelector(`[menu-habit-id="${habit.id}"]`);
     if (!existed) {
@@ -53,9 +59,44 @@ function rerenderMenu(activeHabit) {
   }
 }
 
+function renderHead(activeHabit) {
+  page.header.h1.innerText = activeHabit.name;
+  const progress =
+    activeHabit.days.length / activeHabit.target > 1
+      ? 100
+      : (activeHabit.days.length / activeHabit.target) * 100;
+  page.header.progressPercent.innerText = progress.toFixed(0) + "%";
+  page.header.progressCoverBar.setAttribute("style", `width: ${progress}%`);
+}
+
+function rerenderContent(activeHabit) {
+  page.content.daysContainer.innerHTML = "";
+  for (const index in activeHabit.days) {
+    const element = document.createElement("div");
+    element.classList.add("habit");
+    element.innerHTML = `<div class="habit__day">День ${Number(index) + 1}</div>
+              <div class="habit__comment">${
+                activeHabit.days[index].comment
+              }</div>
+              <button class="habit__delete">
+                <img src="images/delete.svg" alt="Удалить день ${
+                  Number(index) + 1
+                }" />
+              </button>`;
+    page.content.daysContainer.appendChild(element);
+  }
+  page.content.nextDay.innerHTML = `День ${activeHabit.days.length + 1}`;
+}
+
 function rerender(activeHabitId) {
   const activeHabit = habits.find((habit) => habit.id === activeHabitId);
+
+  if (!activeHabit) {
+    return;
+  }
   rerenderMenu(activeHabit);
+  renderHead(activeHabit);
+  rerenderContent(activeHabit);
 }
 
 /*init*/
