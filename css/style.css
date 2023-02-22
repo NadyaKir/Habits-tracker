@@ -92,12 +92,6 @@ body {
   padding: 45px;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 h1 {
   font-size: 30px;
   line-height: 33px;
@@ -200,6 +194,10 @@ input {
 
 input::placeholder {
   color: var(--placeholder-color);
+}
+
+input.error {
+  border: 1px solid red;
 }
 
 .habit__form {
