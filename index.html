@@ -20,14 +20,8 @@
         <img class="logo" src="images/logo.svg" alt="Logo Habbit App" />
         <nav class="menu">
           <div class="menu__list">
-            <!-- <button class="menu__item menu__item_active" menu-habit-id="1">
-              <img src="images/water.svg" alt="water" />
-            </button>
-            <button class="menu__item">
-              <img src="images/food.svg" alt="food" />
-            </button> -->
           </div>
-          <button class="menu__add">
+          <button class="menu__add" onclick="togglePopup()">
             <img src="images/add.svg" alt="add habit" />
           </button>
         </nav>
@@ -66,6 +60,32 @@
             </div>
           </div>
         </main>
+      </div>
+      <div class="cover cover_hidden" id="add-habit-popup">
+        <div class="popup">
+          <h2>Новая привычка</h2>
+          <div class="icon-label">Иконка</div>
+          <div class="icon-select">
+            <button class="icon icon_active" onclick="setIcon(this, 'sport')">
+              <img src="images/sport.svg" alt="Спорт">
+            </button>
+            <button class="icon" onclick="setIcon(this, 'water')">
+              <img src="images/water.svg" alt="Напитки">
+            </button>
+            <button class="icon" onclick="setIcon(this, 'food')">
+              <img src="images/food.svg" alt="Еда">
+            </button>
+            <button class="popup__close" onclick="togglePopup()">
+              <img src="images/close.svg" alt="Закрыть">
+            </button>
+          </div>
+           <form class="popup__form" onsubmit="addHabit(event)">
+              <input type="text" name="name" placeholder="Название">
+              <input type="text" name="icon" hidden="true" placeholder="Иконка" value="sport">
+              <input type="number" name="target" placeholder="Цель">
+              <button class="button" type="submit">Добавить</button>
+            </form>
+        </div>
       </div>
     </div>
   </body>
